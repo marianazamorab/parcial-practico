@@ -1,4 +1,4 @@
-import { Controller, Delete, Get, Param, Post, Put, UseInterceptors } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpCode, Param, Post, Put, UseInterceptors } from '@nestjs/common';
 import { BusinessErrorsInterceptor } from '../shared/interceptors/business-errors/business-errors.interceptor';
 import { SupermercadosCiudadesService } from './ciudades-supermercados.service';
 import { SupermercadoEntity } from 'src/supermercado/supermercado.entity';
@@ -10,7 +10,7 @@ export class CiudadesSupermercadosController {
 
     @Post(':cityId/supermarkets/:supermarketId')
     async addSupermarketToCity(@Param('cityId') cityId: string, @Param('supermarketId') supermarketId: string) {
-        return await this.ciudadesSupermercadosService.addSupermarketToCity(cityId, supermarketId);
+        return await this.ciudadesSupermercadosService.addSupermarketToCity(supermarketId, cityId);
     }
 
     @Get(':cityId/supermarkets')
@@ -24,11 +24,12 @@ export class CiudadesSupermercadosController {
     }
 
     @Put(':cityId/supermarkets')
-    async updateSupermarketsFromCity(@Param('cityId') cityId: string, @Param('supermarkets') supermarkets: SupermercadoEntity[]) {
+    async updateSupermarketsFromCity(@Param('cityId') cityId: string, @Body()supermarkets: SupermercadoEntity[]) {
         return await this.ciudadesSupermercadosService.updateSupermarketsFromCity(cityId, supermarkets);
     }
 
     @Delete(':cityId/supermarkets/:supermarketId')
+    @HttpCode(204)
     async deleteSupermarketFromCity(@Param('cityId') cityId: string, @Param('supermarketId') supermarketId: string) {
         return await this.ciudadesSupermercadosService.deleteSupermarketFromCity(cityId, supermarketId);
     }

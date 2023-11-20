@@ -76,7 +76,8 @@ export class SupermercadosCiudadesService {
         if(!city){
             throw new BusinessLogicException('La ciudad con el id dado no fue encontrada', BusinessError.NOT_FOUND);
         }
-        const supermercado: SupermercadoEntity = city.supermercados.find(supermarket => supermarket.id !== supermarketId);
+  
+        const supermercado: SupermercadoEntity = city.supermercados.find(supermarket => supermarket.id == supermarketId);
         if(!supermercado){
             throw new BusinessLogicException('el supermercado no se encuentra asociado a la ciudad', BusinessError.PRECONDITION_FAILED);
         }

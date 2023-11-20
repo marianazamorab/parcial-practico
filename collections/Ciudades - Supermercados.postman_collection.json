@@ -1,0 +1,394 @@
+{
+	"info": {
+		"_postman_id": "e7700235-63d4-4ab9-b31e-6b7e85ddddb7",
+		"name": "Ciudades - Supermercados",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "14951851"
+	},
+	"item": [
+		{
+			"name": "Agregar ciudad",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var data = pm.response.json()",
+							"pm.globals.set(\"cityId\", data.id)",
+							"",
+							"pm.test(\"Status code is 201\", function(){",
+							"    pm.response.to.have.status(201);",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"nombre\": \"Bogota\",\n    \"pais\": \"Argentina\",\n    \"numeroHabitantes\": 12\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "{{baseURL}}/cities"
+			},
+			"response": []
+		},
+		{
+			"name": "Agregar supermercado",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var data = pm.response.json()",
+							"pm.globals.set(\"supermarketId\", data.id)",
+							"",
+							"pm.test(\"Status code is 201\", function(){",
+							"    pm.response.to.have.status(201);",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"nombre\": \"Exito cadenas 123\",\n    \"longitud\": 14.5,\n    \"latitud\": 12.4,\n    \"paginaWeb\": \"www.youtube.com\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "{{baseURL}}/supermarkets"
+			},
+			"response": []
+		},
+		{
+			"name": "Agregar supermercado no asociado",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var data = pm.response.json()",
+							"pm.globals.set(\"supermarketId2\", data.id)",
+							"",
+							"pm.test(\"Status code is 201\", function(){",
+							"    pm.response.to.have.status(201);",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"nombre\": \"Exito cadenas 123\",\n    \"longitud\": 14.5,\n    \"latitud\": 12.4,\n    \"paginaWeb\": \"www.youtube.com\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "{{baseURL}}/supermarkets"
+			},
+			"response": []
+		},
+		{
+			"name": "Agregar supermercado a ciudad",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var data = pm.response.json()",
+							"pm.globals.set(\"cityId\", data.id)",
+							"",
+							"pm.test(\"Status code is 201\", function(){",
+							"    pm.response.to.have.status(201);",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "{{baseURL}}/cities/{{cityId}}/supermarkets/{{supermarketId}}"
+			},
+			"response": []
+		},
+		{
+			"name": "Agregar supermercado que no existe a una ciudad",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 404\", function(){",
+							"    pm.response.to.have.status(404);",
+							"});",
+							"",
+							"pm.test(\"Get expected message\", function(){",
+							"    var data = pm.response.json();",
+							"    pm.expect(data.message).to.eql(\"El supermercado con el id dado no fue encontrado\")",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"nombre\": \"Bogota\",\n    \"pais\": \"Colombia\",\n    \"numeroHabitantes\": 12\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "{{baseURL}}/cities/{{cityId}}/supermarkets/00000000-0000-0000-0000-000000000000"
+			},
+			"response": []
+		},
+		{
+			"name": "Obtener supermercado asociado a ciudad",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function(){",
+							"    pm.response.to.have.status(200);",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "{{baseURL}}/cities/{{cityId}}/supermarkets/{{supermarketId}}"
+			},
+			"response": []
+		},
+		{
+			"name": "Obtener supermercado no asociado a ciudad",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 412\", function(){",
+							"    pm.response.to.have.status(412);",
+							"});",
+							"",
+							"pm.test(\"Get expected message\", function(){",
+							"    var data = pm.response.json();",
+							"    pm.expect(data.message).to.eql(\"el supermercado no se encuentra asociado a la ciudad\")",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "{{baseURL}}/cities/{{cityId}}/supermarkets/{{supermarketId2}}"
+			},
+			"response": []
+		},
+		{
+			"name": "Obtener todos los supermercados de una ciudad",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Numero de supermercados >\" + 0, function(){",
+							"    var data = pm.response.json()",
+							"    pm.expect(data.length).to.greaterThan(0)",
+							"});",
+							"",
+							"pm.test(\"Status code is 200\", function(){",
+							"    pm.response.to.have.status(200);",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "{{baseURL}}/cities/{{cityId}}/supermarkets"
+			},
+			"response": []
+		},
+		{
+			"name": "Actualizar supermercados asociados a ciudad",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function(){",
+							"    pm.response.to.have.status(200);",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "[{\n    \"id\": \"{{supermarketId}}\",\n    \"nombre\": \"Exito cadenas 123\",\n    \"longitud\": 14.5,\n    \"latitud\": 12.4,\n    \"paginaWeb\": \"www.youtube.com\"\n},\n{\n    \"id\": \"{{supermarketId2}}\",\n    \"nombre\": \"Exito cadenas 1234\",\n    \"longitud\": 14.5,\n    \"latitud\": 12.4,\n    \"paginaWeb\": \"www.youtube.com\"\n}]",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "{{baseURL}}/cities/{{cityId}}/supermarkets"
+			},
+			"response": []
+		},
+		{
+			"name": "Actualizar supermercados con uno inexistente",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 404\", function(){",
+							"    pm.response.to.have.status(404);",
+							"});",
+							"",
+							"pm.test(\"Get expected error message\", function(){",
+							"    var data = pm.response.json();",
+							"    pm.expect(data.message).to.eql(\"El supermercado con el id dado no fue encontrado\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "[{\n    \"id\": \"{{supermarketId}}\",\n    \"nombre\": \"Exito cadenas 123\",\n    \"longitud\": 14.5,\n    \"latitud\": 12.4,\n    \"paginaWeb\": \"www.youtube.com\"\n},\n{\n    \"id\": \"00000000-0000-0000-0000-000000000000\",\n    \"nombre\": \"Exito cadenas 1234\",\n    \"longitud\": 14.5,\n    \"latitud\": 12.4,\n    \"paginaWeb\": \"www.youtube.com\"\n}]",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "{{baseURL}}/cities/{{cityId}}/supermarkets"
+			},
+			"response": []
+		},
+		{
+			"name": "Eliminar supermercado asociado",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 204\", function(){",
+							"    pm.response.to.have.status(204);",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": "{{baseURL}}/cities/{{cityId}}/supermarkets/{{supermarketId}}"
+			},
+			"response": []
+		},
+		{
+			"name": "Eliminar supermercado no asociado",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 412\", function(){",
+							"    pm.response.to.have.status(412);",
+							"});",
+							"",
+							"pm.test(\"Get expected error message\", function(){",
+							"    var data = pm.response.json();",
+							"    pm.expect(data.message).to.eql(\"el supermercado no se encuentra asociado a la ciudad\");",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": "{{baseURL}}/cities/{{cityId}}/supermarkets/{{supermarketId}}"
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}

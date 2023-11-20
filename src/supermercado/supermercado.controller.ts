@@ -15,8 +15,8 @@ export class SupermercadoController {
         return await this.supermercadoService.findAll();
     }
 
-    @Get(':supermarkedId')
-    async findOneById( @Param('supermarkedId') supermarkedId: string) {
+    @Get(':supermarketId')
+    async findOneById( @Param('supermarketId') supermarkedId: string) {
         return await this.supermercadoService.findOne(supermarkedId);
     }
 
@@ -26,15 +26,15 @@ export class SupermercadoController {
         return await this.supermercadoService.create(supermercado);
     }
 
-    @Put(':supermarkedId')
-    async update(@Param('supermarkedId') supermarkedId: string, @Body() supermarketDTO: SupermercadoDto) {
+    @Put(':supermarketId')
+    async update(@Param('supermarketId') supermarkedId: string, @Body() supermarketDTO: SupermercadoDto) {
         const supermercado: SupermercadoEntity = plainToInstance(SupermercadoEntity, supermarketDTO);
         return await this.supermercadoService.update(supermarkedId, supermercado);
     }
 
-    @Delete(':supermarkedId')
+    @Delete(':supermarketId')
     @HttpCode(204)
-    async delete(@Param('supermarkedId') supermarkedId: string) {
+    async delete(@Param('supermarketId') supermarkedId: string) {
         return await this.supermercadoService.delete(supermarkedId);
     }
 }
